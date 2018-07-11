@@ -94,12 +94,7 @@ body {
   .nav-tabs li a {
       color: #777;
   }
-  #googleMap {
-      width: 100%;
-      height: 400px;
-      -webkit-filter: grayscale(100%);
-      filter: grayscale(100%);
-  }  
+  
   .navbar {
       font-family: Montserrat, sans-serif;
       margin-bottom: 0;
@@ -150,8 +145,7 @@ body {
   textarea {
       resize: none;
   }
-
-
+  
   </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -170,7 +164,6 @@ body {
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#">Inicio</a></li>
         <li><a href="<?php echo base_url();?>index.php/monitores/">Monitores</a></li>
-        <li><a href="<?php echo base_url();?>index.php/monitores/save">Nuevo Monitor</a></li>
         <li><a href="<?php echo base_url();?>index.php/monitores/save">Nueva Monitoria</a></li>
         <!--<li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">MORE

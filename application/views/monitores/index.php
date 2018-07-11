@@ -12,6 +12,7 @@
                 <th>Apellidos</th>
                 <th>Celular</th>
                 <th>Email</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,15 @@
                     <td><?php echo $value['apellidos']; ?></td>
                     <td><?php echo $value['celular']; ?></td>
                     <td><?php echo $value['email']; ?></td>
+                    <td>
+                        <a onclick="action('save', '<?php echo $value['cedula']; ?>', false)" href="#">
+                            <span class="glyphicon glyphicon-pencil " style="color:#003399;"></span> &nbsp;&nbsp;
+                        </a>
+
+                        <a onclick="action('delete', '<?php echo $value['cedula']; ?>', true)" href="#">
+                            <span class="glyphicon glyphicon-trash " style="color:#E13300;"></span> &nbsp;&nbsp;
+                        </a>
+                    </td>
                 </tr>
                 <?php
             }
@@ -32,3 +42,19 @@
 
     </table>
 </div>
+
+<script>
+    //redireccionar
+    function action(action, parametro, confirmar) {
+        var continued = false;
+        if (confirmar) {
+            continued = confirm("Estas Seguro de Eliminar este Monitor #" + parametro);
+        } else {
+            continued = true;
+        }
+        if (continued) {
+            location.href = "<?php echo base_url(); ?>index.php/monitores/" + action + "/" + parametro;
+        }
+    }
+
+</script>

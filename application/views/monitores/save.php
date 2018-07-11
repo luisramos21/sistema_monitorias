@@ -1,5 +1,6 @@
-<h1>Agregar Monitores</h1>
+
 <div class="container">
+    <h2><?php echo $action; ?> Monitor</h2>
     <?php
     /*
      * To change this license header, choose License Headers in Project Properties.
@@ -7,33 +8,36 @@
      * and open the template in the editor.
      */
 
-//ini form
-//if (isset($columns)) {
-    echo form_open("/monitores/save", array("class" => "form-horizontal"));
-    foreach ($mi as $key => $column) {
+
+    echo form_open("/monitores/save");
+    foreach ($monitor as $key => $column) {
         $column['id'] = $column['name'];
+        $column['class'] = "form-control";
         //test
-        if ($key == 'cedula') {
+        if ($key == 'cedula' && $column['value']=='123456789') {
             $column['value'] = crc32(md5(date('Y-m-d H:s:i')));
         }
         ?>
         <div class="form-group">
             <?php
-            echo form_label($column['label'], $column['label'], array(
-                "class" => "control-label col-sm-2",
+            echo form_label($column['label'], $column['id'], array(
                 "for" => $column['id']
                     )
             );
+            echo form_input($column);
             ?>
-            <div class="col-sm-10">
-                <?php echo form_input($column); ?>
-            </div>
+
         </div>
 
         <?php
     }
-
-    echo form_submit('', 'Guardar', array("class" => 'btn btn-default'));
+    echo form_label('<span class="glyphicon glyphicon-floppy-saved"></span> &nbsp;&nbsp;Guardar Monitor', 'submit', array("class" => 'btn btn-success'));
+    echo form_submit('', 'GO', array("class" => 'hidden', 'id' => 'submit'));
+    echo form_button('', '<span class="glyphicon glyphicon-floppy-remove"></span> &nbsp;&nbsp;Cancelar', array("class" => 'btn btn-danger','onclick'=>'cancelar();'));
     echo form_close(); //end form
     ?>
 </div>
+<script>
+function cancelar() {
+    location.href = "<?php echo base_url(); ?>index.php/monitores/index";}
+</script>

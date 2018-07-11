@@ -20,59 +20,59 @@ class monitores_model extends CI_Model {
     public $columns = array(
         array(
             'name' => 'cedula',
-            'label' => 'Cedula',
+            'label' => 'Número de Cedula : ',
             'placeholder' => 'Escribe un número de cedula',
             'value' => '123456789'
         ),
         array(
             'name' => 'nombres',
-            'label' => 'Nombre',
+            'label' => 'Nombres : ',
             'placeholder' => 'Escribe un Nombre',
             'value' => '123456789'
         ),
         array(
             'name' => 'apellidos',
-            'label' => 'Apellidos',
+            'label' => 'Apellidos : ',
             'placeholder' => 'Escribe un Apellido',
             'value' => '123456789'
         ),
         array(
             'name' => 'programa_academico',
-            'label' => 'Programa Academico',
+            'label' => 'Programa Academico : ',
             'placeholder' => 'Escribe un Programa Acádemico',
             'value' => '123456789'
         ),
         array(
             'name' => 'semestre',
             'type' => 'number',
-            'label' => 'Semestre',
+            'label' => 'Semestre : ',
             'placeholder' => 'Escribe un semestre',
             'value' => '123456789'
         ),
         array(
             'name' => 'email',
             'type' => 'email',
-            'label' => 'Email',
+            'label' => 'Email : ',
             'placeholder' => 'Escribe un Email',
             'value' => 'ls@gmail.com'
         ),
         array(
             'name' => 'telefono',
             'type' => 'number',
-            'label' => 'Número Telefono',
+            'label' => 'Número Telefono : ',
             'placeholder' => 'Escribe un Telefono',
             'value' => '018000515'
         ),
         array(
             'name' => 'direccion',
-            'label' => 'Dirección',
+            'label' => 'Dirección : ',
             'placeholder' => 'Escribe una Dirección',
             'value' => 'DST sas'
         ),
         array(
             'name' => 'celular',
             'type' => 'number',
-            'label' => 'Número de Celular',
+            'label' => 'Número de Celular : ',
             'placeholder' => 'Escribe una Número de celular',
             'value' => '78999999999'
         )
@@ -94,11 +94,23 @@ class monitores_model extends CI_Model {
         if ($data->num_rows() > 0) {
             $json = array();
             foreach ($data->result() as $row) {
-                $json[] = (array)$row;
+                $json[] = (array) $row;
             }
             return $json;
         }
         return FALSE;
+    }
+
+    function set($cedula) {
+        $data = $this->get($cedula);
+        //file_put_contents('logger.txt', print_r($data[0], true));
+        foreach ($this->columns as $keyColum => $column) {
+            foreach ($data[0] as $key => $value) {
+              if($column['name'] ==$key){
+                  $this->columns[$keyColum]['value'] = $value;
+              }
+            }
+        }
     }
 
     /*

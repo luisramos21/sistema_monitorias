@@ -164,7 +164,7 @@ body {
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#">Inicio</a></li>
         <li><a href="<?php echo base_url();?>index.php/monitores/">Monitores</a></li>
-        <li><a href="<?php echo base_url();?>index.php/monitores/save">Nueva Monitoria</a></li>
+        <li><a href="<?php echo base_url();?>index.php/monitorias/">Listado de Monitorias</a></li>
         <!--<li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">MORE
           <span class="caret"></span></a>

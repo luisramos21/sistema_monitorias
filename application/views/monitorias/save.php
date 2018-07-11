@@ -7,19 +7,15 @@
      * To change this template file, choose Tools | Templates
      * and open the template in the editor.
      */
-
+    $types = array('number', 'email', 'date');
     //create form
-    echo form_open("/monitores/save");
+    echo form_open("/monitorias/save");
     //si es update or save
     echo form_hidden("update", $update);
 
-    foreach ($monitor as $key => $column) {
+    foreach ($monitorias as $key => $column) {
         $column['id'] = $column['name'];
         $column['class'] = "form-control";
-        //test
-        if ($key == 'cedula' && $column['value'] == '123456789') {
-            //$column['value'] = crc32(md5(date('Y-m-d H:s:i')));
-        }
         ?>
         <div class="form-group">
             <?php
@@ -30,7 +26,21 @@
                 );
                 unset($column['label']);
             }
-            echo form_input($column);
+
+            if (!isset($column['type'])) {
+                $column['type'] = 'text';
+            }
+
+            switch ($column['type']) {
+                case 'text':
+                case 'number':
+                case 'date':
+                    echo form_input($column);
+                    break;
+                case 'select':
+                    echo form_dropdown('monitor_id', $opciones_monitores, array(), array('class' => 'form-control'));
+                    break;
+            }
             ?>
 
         </div>

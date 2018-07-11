@@ -1,18 +1,16 @@
 
 
 <div class="container">
-    <h2>Monitores</h2>
-    <a  href="<?php echo base_url(); ?>index.php/monitores/save" class="btn btn-success">Nuevo Monitor</a>
+    <h2>Listado de Monitorias</h2>
+    <a  href="<?php echo base_url(); ?>index.php/monitorias/save" class="btn btn-success">Nueva Monitoria</a>
 
     <table class="table table-condensed">
         <thead>
             <tr>
-                <th>Cedula</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Programa Acádemico</th>
-                <th>Celular</th>
-                <th>Email</th>
+                <th>Materia</th>
+                <th>Monitor</th>
+                <th>Fecha</th>
+                <th>Salón</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -23,18 +21,16 @@
                 foreach ($data as $value) {
                     ?>
                     <tr>
-                        <td><?php echo $value['cedula']; ?></td>
-                        <td><?php echo $value['nombres']; ?></td>
-                        <td><?php echo $value['apellidos']; ?></td>
-                        <td><?php echo $value['programa_academico']; ?></td>
-                        <td><?php echo $value['celular']; ?></td>
-                        <td><?php echo $value['email']; ?></td>
+                        <td><?php echo $value['materia']; ?></td>
+                        <td><?php echo $value['monitor_id']; ?></td>
+                        <td><?php echo $value['fecha']; ?></td>
+                        <td><?php echo $value['salon']; ?></td>
                         <td>
-                            <a onclick="action('save', '<?php echo $value['cedula']; ?>', false)" href="#">
+                            <a onclick="action('save', '<?php echo $value['id']; ?>', false)" href="#">
                                 <span class="glyphicon glyphicon-pencil " style="color:#003399;"></span> &nbsp;&nbsp;
                             </a>
 
-                            <a onclick="action('delete', '<?php echo $value['cedula']; ?>', true)" href="#">
+                            <a onclick="action('delete', '<?php echo $value['id']; ?>', true)" href="#">
                                 <span class="glyphicon glyphicon-trash " style="color:#E13300;"></span> &nbsp;&nbsp;
                             </a>
                         </td>
@@ -44,11 +40,12 @@
             } else {
                 ?>
                 <tr>
-                    <td colspan="7">No hay Monitores</td>
+                    <td colspan="5">No hay Monitorias</td>
                 </tr>
                 <?php
             }
             ?>
+
     </table>
 
     <?php
@@ -74,7 +71,7 @@
             continued = true;
         }
         if (continued) {
-            location.href = "<?php echo base_url(); ?>index.php/monitores/" + action + "/" + parametro;
+            location.href = "<?php echo base_url(); ?>index.php/monitorias/" + action + "/" + parametro;
         }
     }
 

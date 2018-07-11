@@ -27,7 +27,9 @@ class Monitores extends CI_Controller {
         $data = $this->monitores_model->get(0);
         $this->load->view('monitores/index', array('data'=>$data));
     }
-
+    /*
+        Metodo para guardar en o editar monitores
+     *      */
     public function save() {
         if (!$this->input->post()){
         //load columns name in view

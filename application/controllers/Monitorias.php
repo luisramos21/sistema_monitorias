@@ -37,47 +37,58 @@ class Monitorias extends CI_Controller {
       Metodo para guardar en o editar monitores
      *      */
 
-    public function save($cedula = 0) {
+    public function save($id = 0) {
         //set defaut view
         $this->load->view('defaut');
         $action = "Crear Monitoria";
         $request = $this->input->post();
 
-        if ($cedula >= 0 && empty($request)) {
+        if ($id >= 0 && empty($request)) {
             //load columns name in view
-            if ($cedula > 0) {
-                $action = "Cambiar Monitoria #$cedula";
-                $this->monitorias_model->set($cedula);
+            if ($id > 0) {
+                $action = "Editar Monitoria #$id";
+                $this->monitorias_model->set($id);
             }
 
-            $data['monitorias'] = $this->monitorias_model->columns;
+            $data['monitoria'] = $this->monitorias_model->columns;
             $data['action'] = $action;
-            $data['update'] = $cedula > 0 ? 1 : 0;
+            $data['id'] = $id;
+            $data['update'] = $id > 0 ? 1 : 0;
             $monitoresArray = $this->monitores_model->get(0, false);
             $monitores = array();
             foreach ($monitoresArray as $value) {
-                $monitores[] = $value['nombres'] . " ".$value['apellidos'];
+                $monitores[$value['id']] = $value['nombres'] . " " . $value['apellidos'];
             }
-
+            
             $data['opciones_monitores'] = $monitores; //todos los monitores
+            $data['seleccionar_monitor'] = isset($data['monitoria'][2]['value'])?$data['monitoria'][2]['value']:0; //seleccionar el monitor
+            
             //view for formulario save
-            $this->load->view('monitorias/save', $data);
+            $this->isValidFormMonitoria($data);
         } else if (!empty($request)) {
             $mensaje = "No se pudo Guardar la monitoria.";
             $estado = 0;
+            $this->monitorias_model->setData($request);
+            $data['monitoria'] = $this->monitorias_model->columns;
+            $data['action'] = $action;
+            $data['update'] = $request['update'];
             
-            if ($this->monitorias_model->save($request)) {
-                //redireccionar y enviar mensaje a index si se guardar correctamente
-                if (isset($request['update']) && !$request['update']) {
-                    $mensaje = "Se ha Guardado la monitoria";
-                } else {
-                    $mensaje = "Se ha Actualizado el monitoria";
+            $statusForm = $this->isValidFormMonitoria($data);
+            
+            if ($statusForm) {
+                if ($this->monitorias_model->save($request)) {
+                    //redireccionar y enviar mensaje a index si se guardar correctamente
+                    if (isset($request['update']) && !$request['update']) {
+                        $mensaje = "Se ha Guardado la monitoria";
+                    } else {
+                        $mensaje = "Se ha Actualizado el monitoria";
+                    }
+                    $estado = 1;
                 }
-                $estado = 1;
+                $this->session->set_flashdata('Mensaje', $mensaje);
+                $this->session->set_flashdata('Estado', $estado);
+                redirect('monitorias/');
             }
-            $this->session->set_flashdata('Mensaje', $mensaje);
-            $this->session->set_flashdata('Estado', $estado);            
-            redirect('monitorias/');
         }
         //footer of view
         $this->load->view('footer');
@@ -86,7 +97,8 @@ class Monitorias extends CI_Controller {
     function delete($id = 0) {
         $mensaje = "No se pudo Eliminar la monitoria #" . $id;
         $estado = 0;
-        $data = $this->monitorias_model->get($id);
+        $data = $this->monitorias_model->get($id, true);
+        file_put_contents("monitoria.txt", print_r($data, TRUE));
         //ok . se eliminó correctamnete
         if (!empty($data) && $data != FALSE) {
             $estado = $this->monitorias_model->delete($id) ? 1 : 0;
@@ -100,6 +112,30 @@ class Monitorias extends CI_Controller {
         $this->session->set_flashdata('Mensaje', $mensaje);
         $this->session->set_flashdata('Estado', $estado);
         redirect('monitorias/');
+    }
+
+    /*
+      verifica si el los campos sean validos para la lista de monitoria
+     */
+
+    private function isValidFormMonitoria($data) {
+        // basic required field
+        foreach ($this->monitorias_model->columns as $key => $column) {
+
+            if (isset($column['label'])) {
+                $label = str_replace(":", '', $column['label']);
+                $label = strpos($label,"Monitor")==FALSE?$label:"Monitor";
+                $this->form_validation->set_rules(
+                        $column['name'], "Campo - ", 'required', array('required' => "Campo {$label} es Requerido."));
+            }
+        }
+        //valido formulario
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('monitorias/save', $data);
+            return false;
+        }
+
+        return true;
     }
 
 }

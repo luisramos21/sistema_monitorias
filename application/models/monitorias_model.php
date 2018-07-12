@@ -21,30 +21,31 @@ class monitorias_model extends CI_Model {
     public $columns = array(
         array(
             'name' => 'id',
-            'value' => 0,
             'type' => 'hidden'
         ),
         array(
             'name' => 'materia',
             'label' => 'Materia : ',
             'placeholder' => 'Escribe una materia',
-            'value' => 'PHP',
+            'required' => 'required'
         ),
         array(
             'name' => 'monitor_id',
             'label' => 'Selecciona un Monitor : ',
-            'type' => 'select'
+            'type' => 'select',
+            'required' => 'required'
         ),
         array(
             'name' => 'fecha',
             'label' => 'Fecha de Monitoria : ',
-            'type' => 'date'
+            'type' => 'date',
+            'required' => 'required'
         ),
         array(
             'name' => 'salon',
             'label' => 'Salon Monitor : ',
             'placeholder' => 'Escribe un Salon',
-            'value' => 5
+            'required' => 'required'
         )
     );
 
@@ -53,14 +54,22 @@ class monitorias_model extends CI_Model {
         $this->load->database();
     }
 
-    function get($celula = 0, $strict = false) {
+    /*
+      traer datos de la bd
+     *  */
+
+    function get($id = 0, $strict = false) {
 
         $json = array();
-        if ($celula > 0) {
-            $this->db->where($this->ColumnIndex, $celula);
-        }
+
         $this->db->join($this->tableMonitores, "{$this->tableMonitores}.id = {$this->table}.monitor_id");
+        if ($id > 0) {
+            $this->db->where("{$this->table}.{$this->ColumnIndex}", $id);
+        }
+        $this->db->select("$this->tableMonitores.*,$this->table.* , $this->tableMonitores.id as id_monitores");
+
         $data = $this->db->get($this->table);
+
         if ($data->num_rows() > 0) {
 
             foreach ($data->result() as $row) {
@@ -89,6 +98,18 @@ class monitorias_model extends CI_Model {
             return true;
         }
         return false;
+    }
+    
+    function setData($data = array()) {
+        if (!empty($data)) {
+            foreach ($this->columns as $keyColum => $column) {
+                foreach ($data as $key => $value) {
+                    if ($column['name'] == $key) {
+                        $this->columns[$keyColum]['value'] = $value;
+                    }
+                }
+            }
+        }
     }
 
     /*

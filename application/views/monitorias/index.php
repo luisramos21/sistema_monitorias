@@ -21,7 +21,7 @@
 
                 <?php
                 if (!empty($data)) {
-
+                    
                     foreach ($data as $value) {
                         ?>
                         <tr>

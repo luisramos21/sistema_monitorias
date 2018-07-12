@@ -85,8 +85,10 @@ class monitores_model extends CI_Model {
     );
 
     public function __construct() {
-        parent::__construct();
+        parent::__construct();      
+       
         $this->load->database();
+        
     }
 
     function get($cedula = 0, $strict = false, $Forcebeetween = false) {

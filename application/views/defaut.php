@@ -21,6 +21,7 @@ and open the template in the editor.
     Author     : Luis Ramos
 */
 .form_error{font-size: 13px;font-family:Arial;color:red;font-style:italic}
+.form_warning{font-size: 13px;font-family:Arial;color:#bb8844;font-style:italic}
 body {
       font: 400 15px/1.8 Lato, sans-serif;
       color: #777;
@@ -174,7 +175,7 @@ body {
             <li><a href="#">Media</a></li> 
           </ul>
         </li>-->
-        <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
+        
       </ul>
     </div>
   </div>

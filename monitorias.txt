@@ -1,8 +1,0 @@
-Array
-(
-    [update] => 0
-    [materia] => PHP
-    [monitor_id] => 0
-    [fecha] => 2018-07-10
-    [salon] => 5
-)

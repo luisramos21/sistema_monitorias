@@ -20,7 +20,7 @@ and open the template in the editor.
     Created on : 11/07/2018, 10:02:41 AM
     Author     : Luis Ramos
 */
-
+.form_error{font-size: 13px;font-family:Arial;color:red;font-style:italic}
 body {
       font: 400 15px/1.8 Lato, sans-serif;
       color: #777;

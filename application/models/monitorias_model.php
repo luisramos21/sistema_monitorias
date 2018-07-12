@@ -16,6 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class monitorias_model extends CI_Model {
 
     private $table = 'listado_monitorias'; //name of table
+    private $tableMonitores = 'monitores'; //name of table
     public $ColumnIndex = 'id'; //name of primary key of the table 
     public $columns = array(
         array(
@@ -58,7 +59,7 @@ class monitorias_model extends CI_Model {
         if ($celula > 0) {
             $this->db->where($this->ColumnIndex, $celula);
         }
-
+        $this->db->join($this->tableMonitores, "{$this->tableMonitores}.id = {$this->table}.monitor_id");
         $data = $this->db->get($this->table);
         if ($data->num_rows() > 0) {
 
@@ -95,7 +96,7 @@ class monitorias_model extends CI_Model {
      */
 
     function save($data = array()) {
-        $update = false;        
+        $update = false;
 
         //si es actualizar elimino el registro
         if (isset($data['update']) && $data['update'] && isset($data[$this->ColumnIndex])) {
@@ -104,7 +105,7 @@ class monitorias_model extends CI_Model {
             unset($data[$this->ColumnIndex]);
         }
         unset($data['update']);
-        
+
         if (!$update) {
             return $this->db->insert($this->table, $data);
         } else {

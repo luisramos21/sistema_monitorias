@@ -3,8 +3,10 @@
 <div class="container">
     <h2>Monitores</h2>
     <a  href="<?php echo base_url(); ?>index.php/monitores/save" class="btn btn-success">Nuevo Monitor</a>
-
-    <table class="table table-condensed">
+    <a  href="<?php echo base_url(); ?>index.php/monitorias/save" class="btn btn-info">Nueva Monitoria</a>
+    <br>
+    <div class="table-responsive">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Cedula</th>
@@ -34,7 +36,7 @@
                                 <span class="glyphicon glyphicon-pencil " style="color:#003399;"></span> &nbsp;&nbsp;
                             </a>
 
-                            <a onclick="action('delete', '<?php echo $value['cedula']; ?>', true)" href="#">
+                            <a onclick="action('delete', '<?php echo $value['id']; ?>', true)" href="#">
                                 <span class="glyphicon glyphicon-trash " style="color:#E13300;"></span> &nbsp;&nbsp;
                             </a>
                         </td>
@@ -50,6 +52,7 @@
             }
             ?>
     </table>
+     </div>
 
     <?php
     $mensaje = $this->session->flashdata('Mensaje');

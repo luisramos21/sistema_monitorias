@@ -55,7 +55,7 @@ class Monitores extends CI_Controller {
             $data['update'] = $cedula > 0 ? 1 : 0;
             //view for formulario save
             $this->isValidFormMonitor($data);
-        } else if (!empty($request) && empty($extraData)) {
+        } else if (!empty($request)) {
             $mensaje = "No se pudo Guardar el monitor.";
             $estado = 0;
             $this->monitores_model->setData($request);
@@ -137,9 +137,13 @@ class Monitores extends CI_Controller {
 
         if (!empty($validCedula)) {
 
-            if ((bool) $data['update'] && $cedula == $validCedula[0]['cedula'] && $cedula != $data['cedula']) {
+            if (((bool) $data['update'] && $cedula != $data['cedula'] ) && $cedula == $validCedula[0]['cedula'] || (bool) $data['update'] == FALSE && $cedula == $validCedula[0]['cedula']) {
                 $data['Invalid'] = "Número de cédula ya existe por favor digite otro.";
-                $data['action'] = "Editar Monitor #{$data['cedula']}";
+                $action = "Nuevo Monitor";
+                if ($data['cedula'] > 0) {
+                    $action = $data['action'] = "Editar Monitor #{$data['cedula']}";
+                }
+                $data['action'] = $action;
                 $this->load->view('monitores/save', $data);
                 return FALSE;
             }

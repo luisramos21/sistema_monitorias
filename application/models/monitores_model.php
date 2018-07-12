@@ -17,6 +17,7 @@ class monitores_model extends CI_Model {
 
     private $table = 'monitores'; //name of table
     public $ColumnIndex = 'id'; //name of primary key of the table 
+    public $ColumnCedula = 'cedula'; //name colummn cedula
     public $columns = array(
         array(
             'name' => 'id',
@@ -92,8 +93,8 @@ class monitores_model extends CI_Model {
 
         $json = array();
         if ($cedula > 0) {
-            $this->db->where('cedula', $cedula);
-        }        
+            $this->db->where($this->ColumnCedula, $cedula);
+        }
 
         $data = $this->db->get($this->table);
         if ($data->num_rows() > 0) {
@@ -144,10 +145,10 @@ class monitores_model extends CI_Model {
 
     function save($data = array()) {
         $update = false;
-        if (empty($data) || !isset($data["cedula"])) {
+        if (empty($data) || !isset($data[$this->ColumnCedula])) {
             return false;
         }
-        
+
         //si es actualizar elimino el registro
         if (isset($data['update']) && $data['update'] && isset($data['id'])) {
             $update = true;
@@ -167,8 +168,8 @@ class monitores_model extends CI_Model {
       metodo es para eliminar los datos del los monitores
      */
 
-    function delete($id = 0) {
-        $this->db->where($this->ColumnIndex, $id);
+    function delete($cedula = 0) {
+        $this->db->where($this->ColumnCedula, $cedula);
         return $this->db->delete($this->table);
     }
 

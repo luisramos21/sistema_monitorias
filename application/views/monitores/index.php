@@ -36,7 +36,7 @@
                                 <span class="glyphicon glyphicon-pencil " style="color:#003399;"></span> &nbsp;&nbsp;
                             </a>
 
-                            <a onclick="action('delete', '<?php echo $value['id']; ?>', true)" href="#">
+                            <a onclick="action('delete', '<?php echo $value['cedula']; ?>', true)" href="#">
                                 <span class="glyphicon glyphicon-trash " style="color:#E13300;"></span> &nbsp;&nbsp;
                             </a>
                         </td>

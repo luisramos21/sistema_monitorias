@@ -49,5 +49,5 @@ Y Listo Usar Sistema
 License
 *******
 
-Luis ramos.
+Luis Ramos.
 
